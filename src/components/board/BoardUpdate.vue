@@ -1,18 +1,19 @@
 <script setup>
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
-import { userStore } from "@/stores/userPiniaStore";
 import { boardStore } from "@/stores/boardPiniaStore";
+import { userStore } from "@/stores/userPiniaStore";
 
 const router = useRouter();
-const ustore = userStore();
 const bstore = boardStore();
+const store = userStore();
 //검색에 필요한 pgno, key, word
 const article = reactive({
-  subject: "",
-  content: "",
-  isnotice: 0,
-  userId: ustore.userInfo.id,
+  articleNo: bstore.board.articleNo,
+  subject: bstore.board.subject,
+  content: bstore.board.content,
+  isnotice:bstore.board.isnotice,
+  userId: store.userInfo.id,
 });
 
 function updateSubject(e) {
@@ -23,18 +24,36 @@ function updateContent(e) {
   article.content = e.target.value;
   console.log(article);
 }
-//글쓰기 완료
-async function write() {
+//글수정 완료
+async function modify() {
   console.log(article);
-  await bstore.write(article);
-  router.push("/board");
+  await bstore.modify(article);
+  router.push("/@/components/board/board-detail");
+}
+//글수정 취소
+function cancel() {
+  router.push("/@/components/board/board-detail");
 }
 </script>
 
+
 <template>
-  <v-sheet class="text-center py-16" color="primary">
-    <div id="title" class="text-white text-h4 font-weight-medium">글 작성</div>
-    <v-form role="form" id="contact-form" method="post" autocomplete="off" @submit.prevent>
+  <v-sheet
+    class="text-center py-16"
+    color="primary"
+  >
+    <div
+      id="title"
+      class="text-white text-h4 font-weight-medium">
+      글 수정
+    </div>
+    <v-form
+      role="form"
+      id="contact-form"
+      method="post"
+      autocomplete="off"
+      @submit.prevent
+    >
       <v-container>
         <v-row>
           <v-col cols="6">
@@ -54,7 +73,13 @@ async function write() {
             />
           </v-col>
           <v-col cols="6">
-            <h7 bg-color="transparent" flat single-line> 작성자 </h7>
+            <h7
+              bg-color="transparent"
+              flat
+              single-line
+            >
+              작성자
+            </h7>
             <v-text-field
               v-model="article.userId"
               type="text"
@@ -91,8 +116,16 @@ async function write() {
           color="accent"
           flat
           height="55"
-          text="등록하기"
-          v-on:click="write"
+          text="수정하기"
+          v-on:click="modify"
+        />
+        <v-btn
+          class="px-10 text-body-1"
+          color="accent"
+          flat
+          height="55"
+          text="취소"
+          v-on:click="cancel"
         />
       </v-container>
     </v-form>
@@ -100,7 +133,7 @@ async function write() {
 </template>
 
 <style>
-#title {
+#title{
   margin-top: 100px;
 }
 </style>

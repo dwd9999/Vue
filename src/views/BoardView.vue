@@ -10,10 +10,10 @@
 <!--PRIMARY KEY (article_no)-->
 
 <script setup>
-import { ref, computed, watch, onMounted, nextTick } from 'vue';
-import { useRouter } from 'vue-router';
-import { boardStore } from '@/stores/boardPiniaStore';
-import { commentStore } from '@/stores/commentPiniaStore';
+import { ref, computed, watch, onMounted, nextTick } from "vue";
+import { useRouter } from "vue-router";
+import { boardStore } from "@/stores/boardPiniaStore";
+import { commentStore } from "@/stores/commentPiniaStore";
 
 const router = useRouter();
 const bstore = boardStore();
@@ -25,35 +25,35 @@ const dialog = ref(false);
 const dialogDelete = ref(false);
 const headers = ref([
   {
-    title: '번호',
-    align: 'start',
+    title: "번호",
+    align: "start",
     sortable: false,
-    key: 'article_no',
+    key: "article_no",
   },
-  { title: '작성자', key: 'user_id' },
-  { title: '제목', key: 'subject' },
-  { title: '조회수', key: 'hit' },
-  { title: '작성일', key: 'date' },
-  { title: '삭제', key: 'actions', sortable: false }, //세션 적용되면 보여주고 아니면 비워놔
+  { title: "작성자", key: "user_id" },
+  { title: "제목", key: "subject" },
+  { title: "조회수", key: "hit" },
+  { title: "작성일", key: "date" },
+  { title: "삭제", key: "actions", sortable: false }, //세션 적용되면 보여주고 아니면 비워놔
 ]);
 const boards = ref([]);
 const editedIndex = ref(-1);
 const editedItem = ref({
   article_no: -1,
-  subject: '',
-  user_id: '',
+  subject: "",
+  user_id: "",
   hit: 0,
-  date: '',
+  date: "",
 });
 const defaultItem = {
   article_no: -1,
-  subject: '',
-  user_id: '',
+  subject: "",
+  user_id: "",
   hit: 0,
-  date: '',
+  date: "",
 };
 
-const formTitle = computed(() => (editedIndex.value === -1 ? '글쓰기' : '수정'));
+const formTitle = computed(() => (editedIndex.value === -1 ? "글쓰기" : "수정"));
 const pageCount = computed(() => Math.ceil(boards.value.length / itemsPerPage.value));
 
 watch(dialog, (val) => {
@@ -68,139 +68,139 @@ onMounted(() => {
 });
 
 function boardWrite() {
-  router.push('/@/components/board/board-write');
+  router.push("/board/board-write");
 }
 
 async function boardDetail(article_no) {
   console.log(article_no);
   await bstore.getBoard(article_no);
   await cstore.getComments(article_no);
-  router.push('/@/components/board/board-detail');
+  router.push("/board/board-detail");
 }
 
 function initialize() {
   boards.value = [
     {
       article_no: 1,
-      subject: 'Frozen Yogurt',
-      user_id: 'user1',
+      subject: "Frozen Yogurt",
+      user_id: "user1",
       hit: 24,
-      date: '2023-01-01',
+      date: "2023-01-01",
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
       date: 4.0,
     },
     {
-      article_no: 'Frozen Yogurt',
+      article_no: "Frozen Yogurt",
       subject: 159,
       user_id: 6.0,
       hit: 24,
@@ -252,7 +252,6 @@ function save() {
 }
 </script>
 
-
 <template>
   <v-sheet id="board" class="text-center" min-height="700">
     <div id="board_header" class="text-h4 font-weight-medium pt-15">공지사항</div>
@@ -264,21 +263,10 @@ function save() {
       item-value="article_no"
     >
       <template v-slot:top>
-        <v-toolbar
-          flat
-        >
-          <v-divider
-            class="mx-4"
-            inset
-            vertical
-          ></v-divider>
+        <v-toolbar flat>
+          <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-          <button
-            id="btn-write"
-            class="btn btn-success"
-            type="button"
-            v-on:click="boardWrite"
-          >
+          <button id="btn-write" class="btn btn-success" type="button" v-on:click="boardWrite">
             등록
           </button>
           <v-dialog v-model="dialogDelete" max-width="500px">
@@ -298,27 +286,17 @@ function save() {
         <tr>
           <td>{{ item.article_no }}</td>
           <td>{{ item.user_id }}</td>
-          <td
-            @click="boardDetail(item.article_no)"
-          >
+          <td @click="boardDetail(item.article_no)">
             {{ item.subject }}
           </td>
           <td>{{ item.hit }}</td>
           <td>{{ item.date }}</td>
-          <v-icon
-            size="small"
-            @click="deleteItem(item)"
-          >
-            mdi-delete
-          </v-icon>
+          <v-icon size="small" @click="deleteItem(item)"> mdi-delete </v-icon>
         </tr>
       </template>
       <template v-slot:bottom>
         <div class="text-center pt-2">
-          <v-pagination
-            v-model="page"
-            :length="pageCount"
-          ></v-pagination>
+          <v-pagination v-model="page" :length="pageCount"></v-pagination>
         </div>
       </template>
     </v-data-table>
@@ -333,5 +311,3 @@ function save() {
   margin-bottom: 50px;
 }
 </style>
-
-

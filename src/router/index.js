@@ -10,6 +10,10 @@ import QnaView from '@/views/QnaView.vue'
 import SignInView from '@/views/SignInView.vue'
 import SignUpView from '@/components/user/SignUpView.vue'
 import FindPwdView from '@/components/user/FindPWD.vue'
+import MyPageView from '@/components/user/MyPage.vue'
+import DeleteUserInfoView from '@/components/user/DeleteUserInfo.vue'
+import LogOutView from '@/components/user/LogOut.vue'
+import ModifyUserInfoView from '@/components/user/ModifyUserInfo.vue'
 
 // import { userStore } from "@/stores/userPiniaStore.js";
 
@@ -32,12 +36,12 @@ const router = createRouter({
       component: BoardView,
     },
     {
-      path: '/@/components/board/board-detail',
+      path: '/board/board-detail',
       name: 'board-detail',
       component: BoardDetailView,
     },
     {
-      path: '/@/components/board/board-write',
+      path: '/board/board-write',
       name: 'board-write',
       component: BoardWriteView,
     },
@@ -55,6 +59,26 @@ const router = createRouter({
       path: '/@/components/user/signup',
       name: 'signup',
       component: SignUpView,
+    },
+    {
+      path: '/user/mypage',
+      name: 'mypage',
+      component: MyPageView,
+    },
+    {
+      path: '/user/deleteUserInfo',
+      name: 'deleteUserInfo',
+      component: DeleteUserInfoView,
+    },
+    {
+      path: '/user/modifyUserInfo',
+      name: 'modifyUserInfo',
+      component: ModifyUserInfoView,
+    },
+    {
+      path: '/user/logOut',
+      name: 'logOut',
+      component: LogOutView,
     },
     {
       path: '/@/components/user/findpwd',

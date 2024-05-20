@@ -1,97 +1,86 @@
 <template>
-  <v-sheet
-    class="text-center py-16"
-    color="primary"
-  >
-    <div
-      id="title"
-      class="text-white text-h4 font-weight-medium"
-    >
+  <v-sheet class="text-center py-16" color="primary">
+    <div id="title" class="text-white text-h4 font-weight-medium">
       <h3 class="d-inline" v-text="article.subject"></h3>
     </div>
+
     <v-container>
       <v-row>
         <v-col cols="6">
-          <h5
+          <h7 bg-color="transparent" flat single-line> 작성자 </h7>
+          <v-text-field
             bg-color="transparent"
             flat
             hide-details
+            :label="article.user_id"
             single-line
             variant="outlined"
-          >
-          {{ article.user_id }}
-          </h5>
+            name="userId"
+            readonly="readonly"
+          />
+        </v-col>
+        <v-col cols="6">
+          <h7 bg-color="transparent" flat single-line> 조회수 </h7>
+          <v-text-field
+            bg-color="transparent"
+            flat
+            hide-details
+            :label="article.hit"
+            single-line
+            variant="outlined"
+            name="userId"
+            readonly="readonly"
+          />
+        </v-col>
+        <v-col cols="6">
+          <h7 bg-color="transparent" flat single-line> 추천수 </h7>
+          <v-text-field
+            bg-color="transparent"
+            flat
+            hide-details
+            :label="article.recommendation"
+            single-line
+            variant="outlined"
+            name="userId"
+            readonly="readonly"
+          />
         </v-col>
 
         <v-col cols="6">
-          <h5
+          <h7 bg-color="transparent" flat single-line> 작성일 </h7>
+          <v-text-field
             bg-color="transparent"
             flat
             hide-details
+            :label="article.date"
             single-line
             variant="outlined"
-          >
-            {{ article.hit }}
-          </h5>
-        </v-col>
-
-        <v-col cols="6">
-          <h5
-            bg-color="transparent"
-            flat
-            hide-details
-            single-line
-            variant="outlined"
-          >
-            {{ article.recommendation }}
-          </h5>
-        </v-col>
-
-        <v-col cols="6">
-          <h5
-            bg-color="transparent"
-            flat
-            hide-details
-            single-line
-            variant="outlined"
-          >
-            {{ article.date }}
-          </h5>
+            name="userId"
+            readonly="readonly"
+          />
         </v-col>
 
         <v-col cols="12">
           <v-textarea
             bg-color="transparent"
             flat
-            label="Your Message..."
-            lines="4"
+            :label="article.content"
             variant="outlined"
             class="form-control p-2"
             rows="10"
             name="content"
             readonly="readonly"
-          >
-            {{ article.content }}
-          </v-textarea>
+          />
         </v-col>
       </v-row>
     </v-container>
-
-    <v-btn
-      class="px-10 text-body-1"
-      color="accent"
-      flat
-      height="55"
-      text="GET IN TOUCH"
-    />
   </v-sheet>
 </template>
 
-
 <style>
-#title{
+#title {
   margin-top: 100px;
 }
 </style>
-<script setup>
-</script>
+
+<script setup></script>
