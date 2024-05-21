@@ -1,16 +1,33 @@
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted, reactive, watch } from "vue";
+import { gugunStore } from "@/stores/gugunPiniaStore";
 
-const sido = ref([]);
-const selectedSidoCode = ref(-1);
+const gstore = gugunStore();
+const sidolist = ref([]);
+const gugunlist = ref([]); //
+const selected = reactive({
+  sido_code: "",
+  gugun_code: "",
+  content_type_id: "",
+});
+const typelist = [
+  { code: "12", name: "관광지" },
+  { code: "14", name: "문화시설" },
+  { code: "15", name: "축제공연행사" },
+  { code: "25", name: "여행코스" },
+  { code: "28", name: "레포츠" },
+  { code: "32", name: "숙박" },
+  { code: "38", name: "쇼핑" },
+  { code: "39", name: "음식점" },
+];
 
 onMounted(() => {
   initialize();
-  selectedSidoCode.value = 1;
+  selected.sido_code = 1;
 });
 
 function initialize() {
-  sido.value = [
+  sidolist.value = [
     { sido_code: 1, sido_name: "서울" },
     { sido_code: 2, sido_name: "인천" },
     { sido_code: 3, sido_name: "대전" },
@@ -31,9 +48,23 @@ function initialize() {
   ];
 }
 
-const selectedSido = computed(() => {
-  return sido.value.find((item) => item.sido_code === selectedSidoCode.value) || {};
-});
+//구군리스트 가져오기
+async function updateSido() {
+  // alert(selected.sido_code);
+  console.log("Selected sido_code : ", selected.sido_code);
+  gugunlist.value = await gstore.getGuguns(selected.sido_code);
+}
+async function updateGugun(selectedGugun) {
+  selected.gugun_code.value = selectedGugun;
+  console.log(selected.gugun_code);
+}
+function selectButton() {
+  console.log("-------------------");
+}
+
+// watch(selected.sido_code, (newValue) =>
+//   console.log("new lang----------------------------", newValue)
+// );
 </script>
 
 <template>
@@ -55,31 +86,38 @@ const selectedSido = computed(() => {
           <v-col class="d-flex flex-column align-center" cols="12" md="4">
             <div class="text-h6 mt-1">시/도</div>
             <v-select
-              v-model="selectedSido"
+              v-model="selected.sido_code"
               label="시/도"
               variant="solo-inverted"
               style="width: 100%"
-              :items="sido"
-              item-text="sido_name"
+              :items="sidolist"
+              item-title="sido_name"
               item-value="sido_code"
+              @update:modelValue="updateSido"
             ></v-select>
           </v-col>
           <v-col class="d-flex flex-column align-center" cols="12" md="4">
             <div class="text-h6 mt-1">구/군</div>
             <v-select
+              v-model="selected.gugun_code"
               label="구/군"
-              :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
               variant="solo-inverted"
               style="width: 100%"
+              :items="gugunlist"
+              @change="updateGugun"
             ></v-select>
           </v-col>
           <v-col class="d-flex flex-column align-center" cols="12" md="4">
             <div class="text-h6 mt-1">관광지 유형</div>
             <v-select
+              v-model="selectedGugun"
               label="유형"
-              :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
               variant="solo-inverted"
               style="width: 100%"
+              :items="typelist"
+              item-title="name"
+              item-value="code"
+              @change="updateType"
             ></v-select>
           </v-col>
         </v-row>
