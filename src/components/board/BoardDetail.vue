@@ -1,7 +1,7 @@
 <template>
   <v-sheet class="text-center py-16" color="primary">
     <div id="title" class="text-white text-h4 font-weight-medium">
-      <h3 class="d-inline" v-text="article.subject"></h3>
+      <h3 class="d-inline" v-text="board.subject"></h3>
     </div>
 
     <v-container>
@@ -12,7 +12,7 @@
             bg-color="transparent"
             flat
             hide-details
-            :label="article.user_id"
+            :label="board.userId"
             single-line
             variant="outlined"
             name="userId"
@@ -25,7 +25,7 @@
             bg-color="transparent"
             flat
             hide-details
-            :label="article.hit"
+            :label="board.hit"
             single-line
             variant="outlined"
             name="userId"
@@ -52,7 +52,7 @@
             bg-color="transparent"
             flat
             hide-details
-            :label="article.date"
+            :label="board.date"
             single-line
             variant="outlined"
             name="userId"
@@ -64,7 +64,7 @@
           <v-textarea
             bg-color="transparent"
             flat
-            :label="article.content"
+            :label="board.content"
             variant="outlined"
             class="form-control p-2"
             rows="10"

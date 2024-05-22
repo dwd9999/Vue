@@ -74,7 +74,7 @@ function boardWrite() {
 async function boardDetail(article_no) {
   console.log(article_no);
   await bstore.getBoard(article_no);
-  await cstore.getComments(article_no);
+  // await cstore.getComments(article_no);
   router.push("/board/board-detail");
 }
 
