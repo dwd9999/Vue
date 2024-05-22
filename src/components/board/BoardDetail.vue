@@ -84,7 +84,7 @@ async function deleteB() {
       <v-toolbar flat>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
-        <div class="col-lg-2 offset-lg-1" v-if="store.userInfo.id == article.userId">
+        <div class="col-lg-2 offset-lg-1" v-if="store.userInfo.id === article.userId">
           <button id="btn-write" class="btn btn-success" type="button" v-on:click="modify">
             수정
           </button>

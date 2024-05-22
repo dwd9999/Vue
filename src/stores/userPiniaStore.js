@@ -42,6 +42,7 @@ export const userStore = defineStore("userPiniaStore", {
                         console.log("성공")
                         let accessToken = data["accessToken"];
                         let refreshToken = data["refreshToken"];
+                        this.userInfo = data.userInfo;
                         console.log("login success token created!!!! >> ", accessToken, refreshToken);
                         this.isLogin = true;
                         this.isLoginError = false;
@@ -139,6 +140,8 @@ export const userStore = defineStore("userPiniaStore", {
                         this.isLogin = false;
                         this.userInfo = null;
                         this.isValidToken = false;
+                        sessionStorage.removeItem("access-token");
+                        sessionStorage.removeItem("refresh-token");
                     } else {
                         console.log("유저 정보 없음!!!!");
                     }
@@ -157,7 +160,7 @@ export const userStore = defineStore("userPiniaStore", {
                 user,
                 ({data}) => {
                     if (data.message === "success") {
-                        this.userInfo = data.userInfo;
+                        this.userInfo = user;
                         // console.log("3. getUserInfo data >> ", data);
                     } else {
                         console.log("유저 정보 없음!!!!");
@@ -185,6 +188,8 @@ export const userStore = defineStore("userPiniaStore", {
                         this.isLogin = false;
                         this.userInfo = null;
                         this.isValidToken = false;
+                        sessionStorage.removeItem("access-token");
+                        sessionStorage.removeItem("refresh-token");
                         // console.log("3. getUserInfo data >> ", data);
                     } else {
                         console.log("유저 정보 없음!!!!");

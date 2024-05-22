@@ -13,7 +13,7 @@ onMounted(() => {
 const router = useRouter();
 //사용자
 const user = reactive({
-  id: ustore.userInfo.id,
+  // id: ustore.userInfo.id,
   name: ustore.userInfo.name,
   // password: ustore.userInfo.password,
   email: ustore.userInfo.email,
