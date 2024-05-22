@@ -23,7 +23,7 @@ async function logout(userid, success, fail) {
 }
 
 async function modify(user, success, fail) {
-  await api.put(`/user/`, user).then(success).catch(fail);
+  await api.put(`/user`, user).then(success).catch(fail);
 }
 
 async function deleteUser(userid, success, fail) {

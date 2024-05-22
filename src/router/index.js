@@ -6,6 +6,7 @@ import SearchView from '@/views/SearchView.vue'
 import BoardView from '@/views/BoardView.vue'
 import BoardDetailView from '@/components/board/BoardDetail.vue'
 import BoardWriteView from '@/components/board/BoardWrite.vue'
+import BoardUpdateView from '@/components/board/BoardUpdate.vue'
 import QnaView from '@/views/QnaView.vue'
 import SignInView from '@/views/SignInView.vue'
 import SignUpView from '@/components/user/SignUpView.vue'
@@ -36,14 +37,19 @@ const router = createRouter({
       component: BoardView,
     },
     {
-      path: '/board/board-detail',
+      path: '/board/boardDetail',
       name: 'board-detail',
       component: BoardDetailView,
     },
     {
-      path: '/board/board-write',
+      path: '/board/boardWrite',
       name: 'board-write',
       component: BoardWriteView,
+    },
+    {
+      path: '/board/boardUpdate',
+      name: 'board-update',
+      component: BoardUpdateView,
     },
     {
       path: '/qna',
@@ -56,7 +62,7 @@ const router = createRouter({
       component: SignInView,
     },
     {
-      path: '/@/components/user/signup',
+      path: '/user/signup',
       name: 'signup',
       component: SignUpView,
     },
@@ -81,7 +87,7 @@ const router = createRouter({
       component: LogOutView,
     },
     {
-      path: '/@/components/user/findpwd',
+      path: '/user/findpwd',
       name: 'findpwd',
       component: FindPwdView,
     },

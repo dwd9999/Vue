@@ -4,7 +4,7 @@ const api = http;
 
 async function getBoardList({ search }, success, fail) {
   await api
-    .get(`/board/`, {
+    .get(`/board`, {
       params: {
         type: search.type,
         sort: search.sort,
@@ -17,20 +17,24 @@ async function getBoardList({ search }, success, fail) {
     .catch(fail);
 }
 
+async function getBoardListCopy(success, fail) {
+  await api.get(`/board`).then(success).catch(fail);
+}
+
 async function showBoardDetail(articleNo, success, fail) {
   await api.get(`/board/${articleNo}`).then(success).catch(fail);
 }
 
 async function writeBoard(board, success, fail) {
-  await api.post(`/board/`, board).then(success).catch(fail);
+  await api.post(`/board`, board).then(success).catch(fail);
 }
 
 async function modifyBoard(board, success, fail) {
-  await api.put(`/board/`, board).then(success).catch(fail);
+  await api.patch(`/board`, board).then(success).catch(fail);
 }
 
 async function deleteBoard(articleNo, success, fail) {
-  await api.delete(`/board/${articleNo}`).then(success).catch(fail);
+  await api.delete(`/board`, articleNo).then(success).catch(fail);
 }
 
 async function recommendBoard({ param }, success, fail) {

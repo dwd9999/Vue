@@ -32,6 +32,17 @@ export const boardStore = defineStore("boardPiniaStore", {
     },
   },
   actions: {
+    async getBoardsCopy() {
+      await getBoardListCopy(
+        ({ data }) => {
+          this.boards = data.list;
+          console.log("3. getUsersInfo data >> ", data);
+        },
+        async (error) => {
+          console.log("getboardsCopy() error code [] ::: ", error.response.status);
+        }
+      );
+    },
     async getBoards({ search }) {
       console.log(search);
       await getBoardList(

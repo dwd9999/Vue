@@ -13,10 +13,12 @@
 import { ref, computed, watch, onMounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { boardStore } from "@/stores/boardPiniaStore";
+import { userStore } from "@/stores/userPiniaStore";
 import { commentStore } from "@/stores/commentPiniaStore";
 
 const router = useRouter();
 const bstore = boardStore();
+const store = userStore();
 const cstore = commentStore();
 
 const page = ref(1);
@@ -36,7 +38,7 @@ const headers = ref([
   { title: "작성일", key: "date" },
   { title: "삭제", key: "actions", sortable: false }, //세션 적용되면 보여주고 아니면 비워놔
 ]);
-const boards = ref([]);
+const articles = computed(() => bstore.boards);
 const editedIndex = ref(-1);
 const editedItem = ref({
   article_no: -1,
@@ -54,7 +56,7 @@ const defaultItem = {
 };
 
 const formTitle = computed(() => (editedIndex.value === -1 ? "글쓰기" : "수정"));
-const pageCount = computed(() => Math.ceil(boards.value.length / itemsPerPage.value));
+const pageCount = computed(() => Math.ceil(articles.value.length / itemsPerPage.value));
 
 watch(dialog, (val) => {
   if (!val) close();
@@ -68,163 +70,165 @@ onMounted(() => {
 });
 
 function boardWrite() {
-  router.push("/board/board-write");
+  router.push("/board/boardWrite");
 }
 
 async function boardDetail(article_no) {
   console.log(article_no);
   await bstore.getBoard(article_no);
   // await cstore.getComments(article_no);
-  router.push("/board/board-detail");
+  router.push("/board/boardDetail");
 }
 
-function initialize() {
-  boards.value = [
-    {
-      article_no: 1,
-      subject: "Frozen Yogurt",
-      user_id: "user1",
-      hit: 24,
-      date: "2023-01-01",
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-    {
-      article_no: "Frozen Yogurt",
-      subject: 159,
-      user_id: 6.0,
-      hit: 24,
-      date: 4.0,
-    },
-  ];
-}
+// function initialize() {
+//   articles.value = [
+//     {
+//       article_no: 1,
+//       subject: "Frozen Yogurt",
+//       user_id: "user1",
+//       hit: 24,
+//       date: "2023-01-01",
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//     {
+//       article_no: "Frozen Yogurt",
+//       subject: 159,
+//       user_id: 6.0,
+//       hit: 24,
+//       date: 4.0,
+//     },
+//   ];
+// }
 
 function editItem(item) {
-  editedIndex.value = boards.value.indexOf(item);
+  editedIndex.value = articles.value.indexOf(item);
   editedItem.value = { ...item };
   dialog.value = true;
 }
 
-function deleteItem(item) {
-  editedIndex.value = boards.value.indexOf(item);
-  editedItem.value = { ...item };
-  dialogDelete.value = true;
+function deleteItem(articleNo) {
+  // editedIndex.value = articles.value.indexOf(item);
+  // editedItem.value = { ...item };
+  // dialogDelete.value = true;
+  bstore.deleteB(articleNo);
 }
 
-function deleteItemConfirm() {
-  boards.value.splice(editedIndex.value, 1);
-  closeDelete();
-}
+// function deleteItemConfirm() {
+//   // articles.value.splice(editedIndex.value, 1);
+//   bstore.deleteB(articleNo);
+//   closeDelete();
+// }
 
 function close() {
   dialog.value = false;
@@ -242,14 +246,14 @@ function closeDelete() {
   });
 }
 
-function save() {
-  if (editedIndex.value > -1) {
-    Object.assign(boards.value[editedIndex.value], editedItem.value);
-  } else {
-    boards.value.push(editedItem.value);
-  }
-  close();
-}
+// function save() {
+//   if (editedIndex.value > -1) {
+//     Object.assign(articles.value[editedIndex.value], editedItem.value);
+//   } else {
+//     articles.value.push(editedItem.value);
+//   }
+//   close();
+// }
 </script>
 
 <template>
@@ -258,7 +262,7 @@ function save() {
     <v-data-table
       v-model:page="page"
       :headers="headers"
-      :items="boards"
+      :items="articles"
       :items-per-page="itemsPerPage"
       item-value="article_no"
     >
@@ -266,10 +270,12 @@ function save() {
         <v-toolbar flat>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-          <button id="btn-write" class="btn btn-success" type="button" v-on:click="boardWrite">
-            등록
-          </button>
-          <v-dialog v-model="dialogDelete" max-width="500px">
+          <div class="col-lg-2 offset-lg-1" v-if="store.isLogin">
+            <button id="btn-write" class="btn btn-success" type="button" v-on:click="boardWrite">
+              등록
+            </button>
+          </div>
+          <!-- <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5">게시물을 삭제하시겠습니까?</v-card-title>
               <v-card-actions>
@@ -279,7 +285,7 @@ function save() {
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
-          </v-dialog>
+          </v-dialog> -->
         </v-toolbar>
       </template>
       <template v-slot:item="{ item }">
@@ -291,7 +297,9 @@ function save() {
           </td>
           <td>{{ item.hit }}</td>
           <td>{{ item.date }}</td>
-          <v-icon size="small" @click="deleteItem(item)"> mdi-delete </v-icon>
+          <div v-if="store.userInfo.id == article.userId">
+            <v-icon size="small" @click="deleteItem(item.article_no)"> mdi-delete </v-icon>
+          </div>
         </tr>
       </template>
       <template v-slot:bottom>

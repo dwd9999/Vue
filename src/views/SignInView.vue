@@ -137,19 +137,13 @@ async function signIn() {
         </v-btn>
         <p class="mt-4 text-caption text-center">
           계정이 없으신가요?
-          <router-link
-            to="/@/components/user/signup"
-            class="text-success font-weight-bold"
-          >
+          <router-link to="/user/signup" class="text-success font-weight-bold">
             회원가입
           </router-link>
         </p>
         <p class="mt-4 text-caption text-center">
           이메일로 비밀번호 찾기
-          <router-link
-            to="/@/components/user/findpwd"
-            class="text-success font-weight-bold"
-          >
+          <router-link to="/user/findpwd" class="text-success font-weight-bold">
             비밀번호 찾기
           </router-link>
         </p>

@@ -12,8 +12,8 @@ const article = reactive({
   articleNo: bstore.board.articleNo,
   subject: bstore.board.subject,
   content: bstore.board.content,
-  isnotice:bstore.board.isnotice,
-  userId: store.userInfo.id,
+  // isnotice: bstore.board.isnotice,
+  // userId: store.userInfo.id,
 });
 
 function updateSubject(e) {
@@ -28,32 +28,18 @@ function updateContent(e) {
 async function modify() {
   console.log(article);
   await bstore.modify(article);
-  router.push("/@/components/board/board-detail");
+  router.push("/board/boardDetail");
 }
 //글수정 취소
 function cancel() {
-  router.push("/@/components/board/board-detail");
+  router.push("/board/boardDetail");
 }
 </script>
 
-
 <template>
-  <v-sheet
-    class="text-center py-16"
-    color="primary"
-  >
-    <div
-      id="title"
-      class="text-white text-h4 font-weight-medium">
-      글 수정
-    </div>
-    <v-form
-      role="form"
-      id="contact-form"
-      method="post"
-      autocomplete="off"
-      @submit.prevent
-    >
+  <v-sheet class="text-center py-16" color="primary">
+    <div id="title" class="text-white text-h4 font-weight-medium">글 수정</div>
+    <v-form role="form" id="contact-form" method="post" autocomplete="off" @submit.prevent>
       <v-container>
         <v-row>
           <v-col cols="6">
@@ -73,13 +59,7 @@ function cancel() {
             />
           </v-col>
           <v-col cols="6">
-            <h7
-              bg-color="transparent"
-              flat
-              single-line
-            >
-              작성자
-            </h7>
+            <h7 bg-color="transparent" flat single-line> 작성자 </h7>
             <v-text-field
               v-model="article.userId"
               type="text"
@@ -133,7 +113,7 @@ function cancel() {
 </template>
 
 <style>
-#title{
+#title {
   margin-top: 100px;
 }
 </style>

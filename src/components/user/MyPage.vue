@@ -35,7 +35,7 @@ async function logout() {
   toast.success("로그아웃 완료", {
     autoClose: 2000,
   });
-  router.push({ name: "/" }); // 메인 페이지로 이동
+  router.push("/"); // 메인 페이지로 이동
 }
 </script>
 

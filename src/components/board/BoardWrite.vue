@@ -11,8 +11,8 @@ const bstore = boardStore();
 const article = reactive({
   subject: "",
   content: "",
-  isnotice: 0,
-  userId: ustore.userInfo.id,
+  // isnotice: 0,
+  // userId: ustore.userInfo.id,
 });
 
 function updateSubject(e) {
