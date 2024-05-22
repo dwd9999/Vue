@@ -3,12 +3,13 @@ import http from "./http.js";
 const api = http;
 
 async function login(user, success, fail) {
-  await api.post(`/user/login`, JSON.stringify(user)).then(success).catch(fail);
+  await api.post(`/login`, JSON.stringify(user)).then(success).catch(fail);
 }
 
 async function findById(userid, success, fail) {
   api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
-  await api.get(`/user/${userid}`).then(success).catch(fail);
+  console.log("여기까진 옴")
+  await api.get(`/info/${userid}`).then(success).catch(fail);
 }
 
 async function tokenRegeneration(user, success, fail) {
