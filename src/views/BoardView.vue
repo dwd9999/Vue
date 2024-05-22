@@ -1,25 +1,13 @@
-<!--article_no int NOT NULL AUTO_INCREMENT,-->
-<!--subject varchar(20) NOT NULL,-->
-<!--user_id varchar(20) NOT NULL,-->
-<!--content varchar(1000) NOT NULL,-->
-<!--hit int DEFAULT 0,-->
-<!--recommendation int DEFAULT 0,-->
-<!--comment int DEFAULT 0,-->
-<!--date DATETIME DEFAULT CURRENT_TIMESTAMP,-->
-<!--isnotice int,-->
-<!--PRIMARY KEY (article_no)-->
-
 <script setup>
-import { ref, computed, watch, onMounted, nextTick } from "vue";
-import { useRouter } from "vue-router";
-import { boardStore } from "@/stores/boardPiniaStore";
-import { userStore } from "@/stores/userPiniaStore";
-import { commentStore } from "@/stores/commentPiniaStore";
+import {ref, computed, watch, onMounted, nextTick} from "vue";
+import {useRouter} from "vue-router";
+import {boardStore} from "@/stores/boardPiniaStore";
+import {userStore} from "@/stores/userPiniaStore";
+import {getBoardListCopy} from "@/api/board";
 
 const router = useRouter();
 const bstore = boardStore();
 const store = userStore();
-const cstore = commentStore();
 
 const page = ref(1);
 const itemsPerPage = ref(5);
@@ -32,13 +20,12 @@ const headers = ref([
     sortable: false,
     key: "article_no",
   },
-  { title: "작성자", key: "user_id" },
-  { title: "제목", key: "subject" },
-  { title: "조회수", key: "hit" },
-  { title: "작성일", key: "date" },
-  { title: "삭제", key: "actions", sortable: false }, //세션 적용되면 보여주고 아니면 비워놔
+  {title: "작성자", key: "user_id"},
+  {title: "제목", key: "subject"},
+  {title: "조회수", key: "hit"},
+  {title: "작성일", key: "date"},
+  {title: "삭제", key: "actions", sortable: false}, //세션 적용되면 보여주고 아니면 비워놔
 ]);
-const articles = computed(() => bstore.boards);
 const editedIndex = ref(-1);
 const editedItem = ref({
   article_no: -1,
@@ -55,8 +42,9 @@ const defaultItem = {
   date: "",
 };
 
+const boardList = ref([]);
 const formTitle = computed(() => (editedIndex.value === -1 ? "글쓰기" : "수정"));
-const pageCount = computed(() => Math.ceil(articles.value.length / itemsPerPage.value));
+const pageCount = computed(() => Math.ceil(boardList.length / itemsPerPage.value));
 
 watch(dialog, (val) => {
   if (!val) close();
@@ -69,6 +57,10 @@ onMounted(() => {
   initialize();
 });
 
+function initialize() {
+  boardList.value = bstore.getBoardsCopy();
+}
+
 function boardWrite() {
   router.push("/board/boardWrite");
 }
@@ -80,160 +72,20 @@ async function boardDetail(article_no) {
   router.push("/board/boardDetail");
 }
 
-// function initialize() {
-//   articles.value = [
-//     {
-//       article_no: 1,
-//       subject: "Frozen Yogurt",
-//       user_id: "user1",
-//       hit: 24,
-//       date: "2023-01-01",
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//     {
-//       article_no: "Frozen Yogurt",
-//       subject: 159,
-//       user_id: 6.0,
-//       hit: 24,
-//       date: 4.0,
-//     },
-//   ];
-// }
-
 function editItem(item) {
-  editedIndex.value = articles.value.indexOf(item);
-  editedItem.value = { ...item };
+  editedIndex.value = boards.value.indexOf(item);
+  editedItem.value = {...item};
   dialog.value = true;
 }
 
 function deleteItem(articleNo) {
-  // editedIndex.value = articles.value.indexOf(item);
-  // editedItem.value = { ...item };
-  // dialogDelete.value = true;
   bstore.deleteB(articleNo);
 }
-
-// function deleteItemConfirm() {
-//   // articles.value.splice(editedIndex.value, 1);
-//   bstore.deleteB(articleNo);
-//   closeDelete();
-// }
 
 function close() {
   dialog.value = false;
   nextTick(() => {
-    editedItem.value = { ...defaultItem };
+    editedItem.value = {...defaultItem};
     editedIndex.value = -1;
   });
 }
@@ -241,30 +93,22 @@ function close() {
 function closeDelete() {
   dialogDelete.value = false;
   nextTick(() => {
-    editedItem.value = { ...defaultItem };
+    editedItem.value = {...defaultItem};
     editedIndex.value = -1;
   });
 }
 
-// function save() {
-//   if (editedIndex.value > -1) {
-//     Object.assign(articles.value[editedIndex.value], editedItem.value);
-//   } else {
-//     articles.value.push(editedItem.value);
-//   }
-//   close();
-// }
 </script>
 
 <template>
   <v-sheet id="board" class="text-center" min-height="700">
     <div id="board_header" class="text-h4 font-weight-medium pt-15">공지사항</div>
     <v-data-table
-      v-model:page="page"
-      :headers="headers"
-      :items="articles"
-      :items-per-page="itemsPerPage"
-      item-value="article_no"
+        v-model:page="page"
+        :headers="headers"
+        :items="bstore.boards"
+        :items-per-page="itemsPerPage"
+        item-value="article_no"
     >
       <template v-slot:top>
         <v-toolbar flat>
@@ -275,30 +119,19 @@ function closeDelete() {
               등록
             </button>
           </div>
-          <!-- <v-dialog v-model="dialogDelete" max-width="500px">
-            <v-card>
-              <v-card-title class="text-h5">게시물을 삭제하시겠습니까?</v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue-darken-1" variant="text" @click="closeDelete">취소</v-btn>
-                <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">확인</v-btn>
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
-          </v-dialog> -->
         </v-toolbar>
       </template>
       <template v-slot:item="{ item }">
         <tr>
-          <td>{{ item.article_no }}</td>
-          <td>{{ item.user_id }}</td>
-          <td @click="boardDetail(item.article_no)">
+          <td>{{ item.articleNo }}</td>
+          <td>{{ item.userId }}</td>
+          <td @click="boardDetail(item.articleNo)">
             {{ item.subject }}
           </td>
           <td>{{ item.hit }}</td>
           <td>{{ item.date }}</td>
-          <div v-if="store.userInfo.id == article.userId">
-            <v-icon size="small" @click="deleteItem(item.article_no)"> mdi-delete </v-icon>
+          <div v-if="store.userInfo.id === item.userId">
+            <v-icon size="small" @click="deleteItem(item.articleNo)"> mdi-delete</v-icon>
           </div>
         </tr>
       </template>
@@ -315,6 +148,7 @@ function closeDelete() {
 #board {
   margin-top: 100px;
 }
+
 #board_header {
   margin-bottom: 50px;
 }
