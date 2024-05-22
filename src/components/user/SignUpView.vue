@@ -167,15 +167,13 @@ function signUp() {
     toast.success("회원가입 완료", {
       autoClose: 3000,
     });
-    router.push(`/user/login`);
+    router.push(`/signin`);
   });
 }
 </script>
 <template>
   <v-sheet class="text-center py-16" color="primary">
-    <div id="signupTitle" class="text-white text-h4 font-weight-medium">
-      회원가입
-    </div>
+    <div id="signupTitle" class="text-white text-h4 font-weight-medium">회원가입</div>
 
     <div class="text-center text-body-1 mb-15"></div>
 
@@ -206,17 +204,13 @@ function signUp() {
             <span v-if="success.id == 'success'" class="success-message">
               사용 가능한 아이디입니다.
             </span>
-            <span v-else class="error-message">
-              사용 불가능한 아이디입니다.
-            </span>
+            <span v-else class="error-message"> 사용 불가능한 아이디입니다. </span>
           </v-col>
         </v-row>
         <v-row dense justify="center">
           <v-col cols="3">
             <div>
-              <button class="btn btn-primary w-100 py-2" @click="idCheck()">
-                아이디체크
-              </button>
+              <button class="btn btn-primary w-100 py-2" @click="idCheck()">아이디체크</button>
             </div>
           </v-col>
         </v-row>

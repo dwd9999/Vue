@@ -15,7 +15,7 @@ const router = useRouter();
 const user = reactive({
   id: ustore.userInfo.id,
   name: ustore.userInfo.name,
-  password: ustore.userInfo.password,
+  // password: ustore.userInfo.password,
   email: ustore.userInfo.email,
 });
 
@@ -106,7 +106,7 @@ async function modify() {
         autocomplete="off"
         @submit.prevent
       >
-        <v-row dense justify="center">
+        <!-- <v-row dense justify="center">
           <v-col cols="7">
             <v-text-field
               bg-color="transparent"
@@ -123,7 +123,7 @@ async function modify() {
               readonly="readonly"
             />
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-row dense justify="center">
           <v-col cols="7">
             <v-text-field
@@ -140,7 +140,7 @@ async function modify() {
             />
           </v-col>
         </v-row>
-        <v-row dense justify="center">
+        <!-- <v-row dense justify="center">
           <v-col cols="7">
             <v-text-field
               bg-color="transparent"
@@ -155,7 +155,7 @@ async function modify() {
               v-model="user.password"
             />
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-row dense justify="center">
           <v-col cols="7">
             <v-text-field

@@ -28,6 +28,7 @@ const options = [
     path: "/user/deleteUserInfo",
   },
 ];
+const userInfo = computed(() => ustore.userInfo);
 
 async function logout() {
   console.log("로그아웃 -> " + store.userInfo.id);
