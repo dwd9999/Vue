@@ -18,7 +18,7 @@ export const gugunStore = defineStore("gugunPiniaStore", {
   },
   actions: {
     async getGuguns(sido_code) {
-      console.log(sido_code);
+      console.log("sido_code: ", sido_code);
       await getGugunList(
         sido_code,
         ({ data }) => {

@@ -1,79 +1,50 @@
-import { defineStore } from "pinia";
+import {defineStore} from "pinia";
 import router from "@/router";
 import {
-  getGugunList,
+    getTripList,
+    showTripDetail,
 } from "@/api/trip";
 
 export const tripStore = defineStore("tripPiniaStore", {
-  // persist: {
-  //   storage: sessionStorage, //쓰고싶은 스토리지(세션 또는 로컬)
-  // },
-  state: () => ({
-    type: "notice",
-    sort: "article_no",
-    sortName: "기본",
-    pgno: "1",
-    key: "",
-    word: "",
-    boards: null,
-    board: null,
-    now: null, // 지금 시간
-    navigation: null,
-  }),
-  getters: {
-    checkBoards: (state) => {
-      return state.boards;
+    persist: {
+        storage: sessionStorage, //쓰고싶은 스토리지(세션 또는 로컬)
     },
-  },
-  actions: {
-    async getGuguns({ search }) {
-      console.log(search);
-      await getGugunList(
-        { search },
-        ({ data }) => {
-          this.type = data.type;
-          this.pgno = data.pgno;
-          this.key = data.key;
-          this.word = data.word;
-          this.boards = data.list;
-          this.navigation = data.navigation;
-          console.log("3. getUsersInfo data >> ", data);
+    state: () => ({
+        trips: null,
+        trip: null,
+    }),
+    getters: {
+        checkTrips: (state) => {
+            return state.trips;
         },
-        async (error) => {
-          console.log("getboards() error code [] ::: ", error.response.status);
-        }
-      );
     },
-    async getTrips({ search }) {
-      console.log(search);
-      await getTripList(
-        { search },
-        ({ data }) => {
-          this.type = data.type;
-          this.pgno = data.pgno;
-          this.key = data.key;
-          this.word = data.word;
-          this.boards = data.list;
-          this.navigation = data.navigation;
-          console.log("3. getUsersInfo data >> ", data);
+    actions: {
+        async getTrips({selected}) {
+            await getTripList(
+                {selected},
+                ({data}) => {
+                    console.log("log test")
+                    this.trips = data.list;
+                    console.log("3. getTripList data >> ", data);
+                },
+                async (error) => {
+                    console.log("getTripList() error code [] ::: ", error.response.status);
+                }
+            );
         },
-        async (error) => {
-          console.log("getboards() error code [] ::: ", error.response.status);
-        }
-      );
-    },
-    async getBoard(articleNo) {
-      console.log("articleNo: " + articleNo);
-      await showBoardDetail(
-        articleNo,
-        ({ data }) => {
-          this.board = data.board;
-          console.log("3. getBoard data >> ", data);
+
+        async getTripDetail(content_id) {
+            console.log("content_id: ", content_id);
+            await showTripDetail(
+                content_id,
+                ({data}) => {
+                    this.trip = data.trip;
+                    console.log("3. getTripDetail data >> ", data);
+                },
+                async (error) => {
+                    console.log("getTripDetail() error code [] ::: ", error.response.status);
+                }
+            );
         },
-        async (error) => {
-          console.log("getboards() error code [] ::: ", error.response.status);
-        }
-      );
     },
-  },
 });

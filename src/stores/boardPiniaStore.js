@@ -64,7 +64,7 @@ export const boardStore = defineStore("boardPiniaStore", {
             );
         },
         async getBoard(articleNo) {
-            console.log("articleNo: " + articleNo);
+            console.log("articleNo: ", articleNo);
             await showBoardDetail(
                 articleNo,
                 ({data}) => {

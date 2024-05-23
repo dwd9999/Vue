@@ -1,8 +1,12 @@
 <script setup>
 import { ref, onMounted, reactive, watch } from "vue";
 import { gugunStore } from "@/stores/gugunPiniaStore";
+import { tripStore } from "@/stores/tripPiniaStore";
+import { useRouter } from "vue-router";
 
 const gstore = gugunStore();
+const tstore = tripStore();
+const router = useRouter();
 const sidolist = ref([]);
 const gugunlist = ref([]); //
 const selected = reactive({
@@ -54,12 +58,19 @@ async function updateSido() {
   console.log("Selected sido_code : ", selected.sido_code);
   gugunlist.value = await gstore.getGuguns(selected.sido_code);
 }
-async function updateGugun(selectedGugun) {
-  selected.gugun_code.value = selectedGugun;
-  console.log(selected.gugun_code);
+async function updateGugun() {
+  console.log("Selected gugun_code : ", selected.gugun_code);
 }
-function selectButton() {
-  console.log("-------------------");
+
+async function updateType() {
+  console.log("Selected content_type_id : ", selected.content_type_id);
+}
+async function selectButton() {
+  console.log("sido_code:", selected.sido_code);
+  console.log("gugun_code:", selected.gugun_code);
+  console.log("content_type_id:", selected.content_type_id);
+  await tstore.getTrips({selected});
+  router.push("/search/tripList");
 }
 
 // watch(selected.sido_code, (newValue) =>
@@ -88,7 +99,6 @@ function selectButton() {
             <v-select
               v-model="selected.sido_code"
               label="시/도"
-              variant="solo-inverted"
               style="width: 100%"
               :items="sidolist"
               item-title="sido_name"
@@ -101,23 +111,23 @@ function selectButton() {
             <v-select
               v-model="selected.gugun_code"
               label="구/군"
-              variant="solo-inverted"
               style="width: 100%"
               :items="gugunlist"
-              @change="updateGugun"
+              item-title="gugun_name"
+              item-value="gugun_code"
+              @update:modelValue="updateGugun"
             ></v-select>
           </v-col>
           <v-col class="d-flex flex-column align-center" cols="12" md="4">
             <div class="text-h6 mt-1">관광지 유형</div>
             <v-select
-              v-model="selectedGugun"
+              v-model="selected.content_type_id"
               label="유형"
-              variant="solo-inverted"
               style="width: 100%"
               :items="typelist"
               item-title="name"
               item-value="code"
-              @change="updateType"
+              @update:modelValue="updateType"
             ></v-select>
           </v-col>
         </v-row>
@@ -128,6 +138,7 @@ function selectButton() {
             height="55"
             rounded
             text="Discover Mode"
+            @click="selectButton"
             width="128"
           />
         </div>

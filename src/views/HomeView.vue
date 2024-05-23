@@ -9,7 +9,7 @@
 
           <div class="text-body-1 text-medium-emphasis my-5">
             코드조회 및 관광정보의 통합/상세 검색 및 위치기반,지역기반 등 국내 관광에 대한 전반적인
-            상세정보를 국문관광정보로 제공한다.
+            상세정보를 국문관광정보로 제공합니다.
           </div>
 
           <div v-for="text in discover" :key="text" class="text-medium-emphasis my-2 mb-4">

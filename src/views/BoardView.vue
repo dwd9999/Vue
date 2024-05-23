@@ -3,7 +3,6 @@ import {ref, computed, watch, onMounted, nextTick} from "vue";
 import {useRouter} from "vue-router";
 import {boardStore} from "@/stores/boardPiniaStore";
 import {userStore} from "@/stores/userPiniaStore";
-import {getBoardListCopy} from "@/api/board";
 
 const router = useRouter();
 const bstore = boardStore();

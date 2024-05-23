@@ -3,6 +3,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SearchView from '@/views/SearchView.vue'
+import TripDetailView from '@/components/search/TripDetail.vue'
+import TripListView from '@/components/search/TripList.vue'
 import BoardView from '@/views/BoardView.vue'
 import BoardDetailView from '@/components/board/BoardDetail.vue'
 import BoardWriteView from '@/components/board/BoardWrite.vue'
@@ -32,23 +34,33 @@ const router = createRouter({
       component: SearchView,
     },
     {
+      path: '/search/tripDetail',
+      name: 'tripDetail',
+      component: TripDetailView,
+    },
+    {
+      path: '/search/tripList',
+      name: 'tripList',
+      component: TripListView,
+    },
+    {
       path: '/board',
       name: 'board',
       component: BoardView,
     },
     {
       path: '/board/boardDetail',
-      name: 'board-detail',
+      name: 'boardDetail',
       component: BoardDetailView,
     },
     {
       path: '/board/boardWrite',
-      name: 'board-write',
+      name: 'boardWrite',
       component: BoardWriteView,
     },
     {
       path: '/board/boardUpdate',
-      name: 'board-update',
+      name: 'boardUpdate',
       component: BoardUpdateView,
     },
     {
