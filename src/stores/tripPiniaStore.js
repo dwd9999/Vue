@@ -12,10 +12,14 @@ export const tripStore = defineStore("tripPiniaStore", {
     state: () => ({
         trips: null,
         trip: null,
+        selected: null,
     }),
     getters: {
         checkTrips: (state) => {
             return state.trips;
+        },
+        checkSelected: (state) => {
+            return state.selected;
         },
     },
     actions: {
@@ -24,6 +28,7 @@ export const tripStore = defineStore("tripPiniaStore", {
                 {selected},
                 ({data}) => {
                     console.log("log test")
+                    this.selected = {selected};
                     this.trips = data.list;
                     console.log("3. getTripList data >> ", data);
                 },

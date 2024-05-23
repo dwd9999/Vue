@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted} from "vue";
+import {ref, onMounted, reactive} from "vue";
 import {useRouter} from "vue-router";
 import {tripStore} from "@/stores/tripPiniaStore";
 import kakaoInfowindow from "/public/assets/kakaoInfowindow.jpg";
@@ -7,6 +7,8 @@ import kakaoInfowindow from "/public/assets/kakaoInfowindow.jpg";
 const router = useRouter();
 const tstore = tripStore();
 const tripList = ref([]);
+// const selected = ref([]);
+
 const typelist = [
   { code: "12", name: "관광지" },
   { code: "14", name: "문화시설" },
@@ -25,6 +27,7 @@ onMounted(() => {
 function initialize() {
   tstore.getTrips();
   tripList.value = tstore.checkTrips;
+  // selected.value = tstore.checkSelected;
 }
 
 async function GoToTripDetail(contentId) {
@@ -35,13 +38,13 @@ async function GoToTripDetail(contentId) {
 </script>
 
 <template>
-  <div class = "container">
+  <div id="tripList" class="d-flex flex-wrap justify-center">
     <v-card
         v-for="info in tripList"
         :key="info.contentTypeId"
         class="mx-auto my-2"
         max-width="400"
-        style="height: 500px; overflow: hidden;"
+        style="width: 100%; height: 300px; overflow: hidden;"
         @click="GoToTripDetail(info.contentId)"
     >
       <v-img
@@ -51,11 +54,6 @@ async function GoToTripDetail(contentId) {
           cover
       ></v-img>
       <v-card-title>{{ info.title }}</v-card-title>
-<!--      <v-card-subtitle>-->
-<!--        {{-->
-<!--          typelist.filter((el) => el.code == info.contentTypeId)[0].name || " 여행지 "-->
-<!--        }}-->
-<!--      </v-card-subtitle>-->
       <v-card-text class="overflow-hidden" style="max-height: 100px;">
         <div>{{ info.addr1 }}</div>
         <div>{{ info.addr2 }}</div>
@@ -68,5 +66,8 @@ async function GoToTripDetail(contentId) {
   margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+}
+#tripList{
+  margin-top: 150px;
 }
 </style>

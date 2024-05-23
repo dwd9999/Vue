@@ -15,29 +15,29 @@ const dialogDelete = ref(false);
 const headers = ref([
   {
     title: "번호",
-    align: "start",
+    align: "center",
     sortable: false,
     key: "article_no",
   },
-  {title: "작성자", key: "user_id"},
-  {title: "제목", key: "subject"},
-  {title: "조회수", key: "hit"},
-  {title: "작성일", key: "date"},
-  {title: "삭제", key: "actions", sortable: false}, //세션 적용되면 보여주고 아니면 비워놔
+  {title: "작성자", key: "user_id", align: "center"},
+  {title: "제목", key: "subject", align: "center"},
+  // {title: "조회수", key: "hit"},
+  {title: "작성일", key: "date", align: "center"},
+  {title: "  ", key: "actions", sortable: false, align: "center"}, //세션 적용되면 보여주고 아니면 비워놔
 ]);
 const editedIndex = ref(-1);
 const editedItem = ref({
   article_no: -1,
   subject: "",
   user_id: "",
-  hit: 0,
+  // hit: 0,
   date: "",
 });
 const defaultItem = {
   article_no: -1,
   subject: "",
   user_id: "",
-  hit: 0,
+  // hit: 0,
   date: "",
 };
 
@@ -61,7 +61,8 @@ function initialize() {
   boardList.value = bstore.boards;
 }
 
-function boardWrite() {
+async function boardWrite(userId) {
+  console.log("boardWrite > userId >>> ", userId);
   router.push("/board/boardWrite");
 }
 
@@ -103,6 +104,7 @@ function closeDelete() {
   <v-sheet id="board" class="text-center" min-height="700">
     <div id="board_header" class="text-h4 font-weight-medium pt-15">공지사항</div>
     <v-data-table
+        class="text-center"
         v-model:page="page"
         :headers="headers"
         :items="boardList"
@@ -113,8 +115,8 @@ function closeDelete() {
         <v-toolbar flat>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-          <div class="col-lg-2 offset-lg-1" v-if="store.isLogin">
-            <button id="btn-write" class="btn btn-success" type="button" v-on:click="boardWrite">
+          <div class="col-lg-2 offset-lg-1" v-if="store.admin">
+            <button id="btn-write" class="btn btn-success" type="button" v-on:click="boardWrite(store.id)">
               등록
             </button>
           </div>
@@ -122,14 +124,22 @@ function closeDelete() {
       </template>
       <template v-slot:item="{ item }">
         <tr>
-          <td>{{ item.articleNo }}</td>
-          <td>{{ item.userId }}</td>
-          <td @click="boardDetail(item.articleNo)">
+          <td class="text-center"
+              @click="boardDetail(item.articleNo)">{{ item.articleNo }}</td>
+          <td class="text-center"
+              @click="boardDetail(item.articleNo)">{{ item.userId }}</td>
+          <td class="text-center"
+              @click="boardDetail(item.articleNo)">
             {{ item.subject }}
           </td>
-          <td>{{ item.hit }}</td>
-          <td>{{ item.date }}</td>
-          <v-icon size="small" @click="deleteItem(item.articleNo)"> mdi-delete</v-icon>
+<!--          <td>{{ item.hit }}</td>-->
+          <td class="text-center"
+              @click="boardDetail(item.articleNo)">
+            {{ item.date }}
+          </td>
+          <div v-if="store.id === item.userId">
+            <v-icon size="small" @click="deleteItem(item.articleNo)"> mdi-delete</v-icon>
+          </div>
         </tr>
       </template>
       <template v-slot:bottom>
@@ -148,5 +158,9 @@ function closeDelete() {
 
 #board_header {
   margin-bottom: 50px;
+}
+
+.text-center {
+  text-align: center;
 }
 </style>

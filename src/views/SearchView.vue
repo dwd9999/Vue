@@ -85,7 +85,7 @@ async function selectButton() {
     <v-sheet
       id="search"
       class="d-flex justify-center align-center text-center flex-column"
-      color="primary"
+      color="white"
       min-height="600"
     >
       <div class="text-h3 font-weight-medium mb-5">지역별 관광정보</div>
@@ -135,13 +135,14 @@ async function selectButton() {
         </v-row>
         <div class="d-flex ga-12 justify-center mt-15">
           <v-btn
-            class="text-primary text-body-2"
+            class="text-white text-body-2"
             flat
             height="55"
             rounded
-            text="Discover Mode"
+            text="Discover More"
             @click="selectButton"
             width="128"
+            color="primary"
           />
         </div>
       </v-container>
@@ -151,6 +152,6 @@ async function selectButton() {
 
 <style>
 #search {
-  margin-top: 150px;
+  margin-top: 100px;
 }
 </style>

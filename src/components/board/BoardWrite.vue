@@ -9,12 +9,16 @@ const ustore = userStore();
 const bstore = boardStore();
 //검색에 필요한 pgno, key, word
 const article = reactive({
+  id: "",
   subject: "",
   content: "",
   // isnotice: 0,
   // userId: ustore.userInfo.id,
 });
-
+function updateId(e) {
+  article.id = e.target.value;
+  console.log(article);
+}
 function updateSubject(e) {
   article.subject = e.target.value;
   console.log(article);
@@ -25,8 +29,9 @@ function updateContent(e) {
 }
 //글쓰기 완료
 async function write() {
-  console.log(article);
+  console.log("article", article);
   await bstore.write(article);
+
   router.push("/board");
 }
 </script>
@@ -54,9 +59,8 @@ async function write() {
             />
           </v-col>
           <v-col cols="6">
-            <h7 bg-color="transparent" flat single-line> 작성자 </h7>
             <v-text-field
-              v-model="article.userId"
+              v-model="ustore.id"
               type="text"
               class="form-control"
               id="id"
@@ -66,7 +70,8 @@ async function write() {
               label="작성자"
               single-line
               variant="outlined"
-              :value="article.userId"
+              :value="ustore.id"
+              v-on:keyup="updateId"
               name="userId"
               readonly="readonly"
             />

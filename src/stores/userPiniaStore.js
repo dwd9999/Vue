@@ -20,6 +20,10 @@ export const userStore = defineStore("userPiniaStore", {
         isLogin: false,
         isLoginError: false,
         userInfo: null,
+        id: "",
+        admin: "",
+        name: "",
+        message: "",
         isValidToken: false,
     }),
     getters: {
@@ -54,11 +58,12 @@ export const userStore = defineStore("userPiniaStore", {
             await login(
                 user,
                 ({data}) => {
-                    console.log(data)
-                    console.log("성공")
                     let accessToken = data["accessToken"];
                     let refreshToken = data["refreshToken"];
-                    this.userInfo = data.userInfo;
+                    this.id = data["id"];
+                    this.admin = data["admin"];
+                    this.name = data["name"];
+                    this.message = data["message"];
                     console.log("login success token created!!!! >> ", accessToken, refreshToken);
                     this.isLogin = true;
                     this.isLoginError = false;
