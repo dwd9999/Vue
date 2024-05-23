@@ -33,12 +33,11 @@ export const boardStore = defineStore("boardPiniaStore", {
     },
     actions: {
         async getBoardsCopy() {
-
             await getBoardListCopy(
                 ({data}) => {
                     console.log("log test")
                     this.boards = data.list;
-                    console.log("3. getUsersInfo data >> ", data);
+                    console.log("3. getBoardsCopy data >> ", data);
                 },
                 async (error) => {
                     console.log("getboardsCopy() error code [] ::: ", error.response.status);
@@ -80,11 +79,12 @@ export const boardStore = defineStore("boardPiniaStore", {
             // let decodeToken = jwtDecode(token);
             // console.log("회원정보수정중2");
             // console.log("5. modifyUserInfo() decodeToken :: ", decodeToken);
-            console.log(board);
+            console.log("write(board):", board);
             await writeBoard(
                 board,
                 async ({data}) => {
                     if (data.message === "success") {
+
                         this.getBoardsCopy();
                         // commit("SET_USER_INFO", data.userInfo);
                         // console.log("3. getUserInfo data >> ", data);

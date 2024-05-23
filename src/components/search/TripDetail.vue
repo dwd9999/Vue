@@ -80,7 +80,7 @@ function loadMaker(){
       <v-row id="row2" align="center">
         <v-col cols="12" md="6">
           <div class="d-flex flex-column align-items-center">
-            <h5>위치</h5>
+            <h4>위치</h4>
             <div id="map"></div>
           </div>
         </v-col>
