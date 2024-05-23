@@ -23,7 +23,8 @@ onMounted(() => {
 });
 
 function initialize() {
-  tripList.value = tstore.getTrips();
+  tstore.getTrips();
+  tripList.value = tstore.checkTrips;
 }
 
 async function GoToTripDetail(content_id) {
@@ -40,20 +41,20 @@ async function GoToTripDetail(content_id) {
         :key="info.content_type_id"
         class="mx-auto"
         max-width="400"
-        @click="GoToTripDetail(info.content_id)"
+        @click="GoToTripDetail(info.contentId)"
     >
       <v-img
           class="align-end text-white"
           height="200"
-          :src="info.first_image || kakaoInfowindow"
+          :src="info.firstImage || kakaoInfowindow"
           cover
       >
       </v-img>
       <v-card-title>{{ info.title }}</v-card-title>
       <v-card-subtitle>
-        {{
-          typelist.filter((el) => el.code == info.content_type_id)[0].name || " 여행지 "
-        }}
+<!--        {{-->
+<!--          typelist.filter((el) => el.code === info.contentTypeId)[0].name || " 여행지 "-->
+<!--        }}-->
       </v-card-subtitle>
 
       <v-card-text>
