@@ -6,9 +6,9 @@ async function getTripList({selected}, success, fail) {
     await api
         .get(`/trip`, {
             params: {
-                sido_code: selected.sido_code,
-                gugun_code: selected.gugun_code,
-                content_type_id: selected.content_type_id,
+                sidoCode: selected.sido_code,
+                gugunCode: selected.gugun_code,
+                contentTypeId: selected.content_type_id,
             },
         })
         .then(success)
