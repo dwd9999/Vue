@@ -2,6 +2,11 @@ import http from "./http.js";
 
 const api = http;
 
+async function registerRequest(user, success, fail) {
+    console.log("user", user);
+    await api.post('/register', user).then(success).catch(fail);
+}
+
 async function login(user, success, fail) {
     await api.post(`/login`, JSON.stringify(user)).then(success).catch(fail);
 }
@@ -30,4 +35,4 @@ async function deleteUser(userid, success, fail) {
     await api.delete(`/user`, userid).then(success).catch(fail);
 }
 
-export {login, findById, tokenRegeneration, logout, modify, deleteUser};
+export {registerRequest, login, findById, tokenRegeneration, logout, modify, deleteUser};

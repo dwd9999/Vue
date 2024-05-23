@@ -8,8 +8,9 @@ import {
     tokenRegeneration,
     logout,
     modify,
-    deleteUser,
+    deleteUser, registerRequest,
 } from "@/api/user";
+import {toast} from "vue3-toastify";
 //npm i pinia-plugin-persistedstate --force
 export const userStore = defineStore("userPiniaStore", {
     persist: {
@@ -37,37 +38,42 @@ export const userStore = defineStore("userPiniaStore", {
         },
     },
     actions: {
+        async register(user) {
+            await registerRequest(
+                user,
+                () => {
+                    console.log("회원가입 -> ");
+                    toast.success("회원가입 완료", {
+                        autoClose: 2000,
+                    });
+                    router.push(`/signin`);
+                }, (error) => {
+                    toast.error(error.response.data.message, {
+                        autoClose: 2000,
+                    });
+                },
+            )
+        },
         async userConfirm(user) {
             await login(
                 user,
                 ({data}) => {
-                    console.log(data)
-                    if (data.message === "success") {
-                        console.log("성공")
-                        let accessToken = data["accessToken"];
-                        let refreshToken = data["refreshToken"];
-                        // this.userInfo = data.userInfo;
-                        this.id = data["id"];
-                        this.admin = data["admin"];
-                        this.name = data["name"];
-                        this.message = data["message"];
-                        console.log("data.userInfo >> ", data.userInfo);
-                        console.log("login success token created!!!! >> ", accessToken, refreshToken);
-                        this.isLogin = true;
-                        this.isLoginError = false;
-                        this.isValidToken = true;
-                        sessionStorage.setItem("access-token", accessToken);
-                        sessionStorage.setItem("refresh-token", refreshToken);
-                        console.log("저장 완료")
-                    } else {
-                        console.log("성공 아님")
-                        this.isLogin = false;
-                        this.isLoginError = true;
-                        this.isValidToken = false;
-                    }
+                    let accessToken = data["accessToken"];
+                    let refreshToken = data["refreshToken"];
+                    this.id = data["id"];
+                    this.admin = data["admin"];
+                    this.name = data["name"];
+                    this.message = data["message"];
+                    console.log("login success token created!!!! >> ", accessToken, refreshToken);
+                    this.isLogin = true;
+                    this.isLoginError = false;
+                    this.isValidToken = true;
+                    sessionStorage.setItem("access-token", accessToken);
+                    sessionStorage.setItem("refresh-token", refreshToken);
+                    console.log("저장 완료")
                 },
                 (error) => {
-                    console.log(error);
+                    toast.error(error["response"].data.message);
                 },
             );
         },
