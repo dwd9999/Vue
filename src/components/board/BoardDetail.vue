@@ -55,7 +55,7 @@ async function deleteB() {
       </v-toolbar>
     </template>
     <div id="title" class="text-white text-h4 font-weight-medium">
-      <h3 class="d-inline" v-text="board.subject"></h3>
+      <h3 class="d-inline" v-text="bstore.board.subject"></h3>
     </div>
 
     <v-container>
@@ -66,7 +66,7 @@ async function deleteB() {
             bg-color="transparent"
             flat
             hide-details
-            :label="board.userId"
+            :label="bstore.board.userId"
             single-line
             variant="outlined"
             name="userId"
@@ -79,7 +79,7 @@ async function deleteB() {
             bg-color="transparent"
             flat
             hide-details
-            :label="board.hit"
+            :label="bstore.board.hit"
             single-line
             variant="outlined"
             name="userId"
@@ -92,7 +92,7 @@ async function deleteB() {
             bg-color="transparent"
             flat
             hide-details
-            :label="article.recommendation"
+            :label="bstore.board.recommendation"
             single-line
             variant="outlined"
             name="userId"
@@ -106,7 +106,7 @@ async function deleteB() {
             bg-color="transparent"
             flat
             hide-details
-            :label="board.date"
+            :label="bstore.board.date"
             single-line
             variant="outlined"
             name="userId"
@@ -118,7 +118,7 @@ async function deleteB() {
           <v-textarea
             bg-color="transparent"
             flat
-            :label="board.content"
+            :label="bstore.board.content"
             variant="outlined"
             class="form-control p-2"
             rows="10"

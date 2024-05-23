@@ -1,13 +1,15 @@
 <script setup>
-import { onMounted, reactive } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import {onMounted, reactive} from "vue";
+import {useRouter, useRoute} from "vue-router";
 
-import { toast } from "vue3-toastify";
+import {toast} from "vue3-toastify";
 import http from "@/api/http.js";
+import {userStore} from "@/stores/userPiniaStore";
 
-onMounted(() => {});
+onMounted(() => {
+});
 const router = useRouter();
-
+const ustore = userStore();
 //사용자
 const user = reactive({
   id: "",
@@ -62,6 +64,7 @@ function characterCheck(data, key) {
     error[key] = "type";
   }
 }
+
 //한글 사용 여부 확인하는 함수
 function koreanCheck(data, key) {
   var check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; // 아이디, 비밀번호는 한글 불가능
@@ -69,6 +72,7 @@ function koreanCheck(data, key) {
     error[key] = "type";
   }
 }
+
 //비밀번호 확인하는 함수
 function checkPassword() {
   if (user.password === current.password) {
@@ -122,35 +126,37 @@ function updateData(data, key) {
   // console.log(error)
   console.log(user);
 }
+
 //회원가입 유효 검사
 function checkValid() {
   if (success.id == "") {
     alert("아이디 중복 여부를 확인해주세요.");
   }
   if (
-    error.id == "" &&
-    error.password == "" &&
-    error.name == "" &&
-    error.email == "" &&
-    success.id == "success" &&
-    success.password == "success"
+      error.id === "" &&
+      error.password === "" &&
+      error.name === "" &&
+      error.email === "" &&
+      success.id === "success" &&
+      success.password === "success"
   )
     return true;
   return false;
 }
+
 //아이디 중복 체크
 function idCheck() {
-  if (user.id == "") {
+  if (user.id === "") {
     alert("아이디를 입력하세요.");
     return;
   }
-  http.get(`/checkId/${user.id}`).then(({ data }) => {
+  http.get(`/checkId/${user.id}`).then(({data}) => {
     console.log("아이디 중복 체크 -> " + data);
-    if (data == 0) {
+    if (data === 0) {
       success.id = "success";
       // alert("사용 가능한 아이디 입니다.");
     }
-    if (data == 1) {
+    if (data === 1) {
       success.id = "failed";
       // alert("이미 존재하는 아이디 입니다.");
     }
@@ -158,22 +164,14 @@ function idCheck() {
 }
 
 //회원가입
-function signUp() {
+async function signUp() {
   //회원가입 양식에 맞게 작성하였는지 검사
-  if (success.id != "success") {
-    return;
+  if (success.id !== "success") {
+    toast.error("아이디 중복 검사를 통과해주세요.");
+  } else {
+    console.log("요청을 보내긴 하네")
+    await ustore.register(user);
   }
-  http.post(`/register`, user).then(({ data }) => {
-    // 회원 가입 성공 -> 로그인으로 넘어가기?
-    if(data == 1) {
-      console.log("회원가입 -> " + data);
-      toast.success("회원가입 완료", {
-        autoClose: 3000,
-      });
-      router.push(`/signin`);
-    }
-    else alert("회원가입 실패. 양식에 맞춰 다시 입력해주세요.");
-  });
 }
 </script>
 <template>
@@ -184,28 +182,28 @@ function signUp() {
 
     <v-container>
       <v-form
-        class="form-signin w-100 m-auto"
-        role="form"
-        id="contact-form"
-        method="post"
-        autocomplete="off"
-        @submit.prevent
+          class="form-signin w-100 m-auto"
+          role="form"
+          id="contact-form"
+          method="post"
+          autocomplete="off"
+          @submit.prevent
       >
         <v-row dense justify="center">
           <v-col cols="7">
             <v-text-field
-              bg-color="transparent"
-              flat
-              hide-details
-              label="아이디"
-              single-line
-              variant="outlined"
-              type="text"
-              class="form-control"
-              id="floatingInput"
-              v-model="user.id"
+                bg-color="transparent"
+                flat
+                hide-details
+                label="아이디"
+                single-line
+                variant="outlined"
+                type="text"
+                class="form-control"
+                id="floatingInput"
+                v-model="user.id"
             />
-             <label for="floatingInput">ID</label>
+            <label for="floatingInput">ID</label>
             <span v-if="success.id == 'success'" class="success-message">
               사용 가능한 아이디입니다.
             </span>
@@ -222,62 +220,62 @@ function signUp() {
         <v-row dense justify="center">
           <v-col cols="7">
             <v-text-field
-              bg-color="transparent"
-              flat
-              hide-details
-              label="비밀번호"
-              single-line
-              variant="outlined"
-              type="password"
-              class="form-control"
-              id="floatingPassword"
-              v-model="user.password"
+                bg-color="transparent"
+                flat
+                hide-details
+                label="비밀번호"
+                single-line
+                variant="outlined"
+                type="password"
+                class="form-control"
+                id="floatingPassword"
+                v-model="user.password"
             />
           </v-col>
         </v-row>
         <v-row dense justify="center">
           <v-col cols="7">
             <v-text-field
-              bg-color="transparent"
-              flat
-              hide-details
-              label="이름"
-              single-line
-              variant="outlined"
-              type="text"
-              class="form-control"
-              id="floatingName"
-              v-model="user.name"
+                bg-color="transparent"
+                flat
+                hide-details
+                label="이름"
+                single-line
+                variant="outlined"
+                type="text"
+                class="form-control"
+                id="floatingName"
+                v-model="user.name"
             />
           </v-col>
         </v-row>
         <v-row dense justify="center">
           <v-col cols="7">
             <v-text-field
-              bg-color="transparent"
-              flat
-              hide-details
-              label="이메일"
-              single-line
-              variant="outlined"
-              type="email"
-              class="form-control"
-              id="floatingEmail"
-              v-model="user.email"
+                bg-color="transparent"
+                flat
+                hide-details
+                label="이메일"
+                single-line
+                variant="outlined"
+                type="email"
+                class="form-control"
+                id="floatingEmail"
+                v-model="user.email"
             />
           </v-col>
         </v-row>
         <v-row dense justify="center">
           <v-col cols="7">
             <v-btn
-              id="signupBtn"
-              class="px-10 text-body-1"
-              type="submit"
-              color="accent"
-              flat
-              height="55"
-              text="회원가입"
-              @click="signUp()"
+                id="signupBtn"
+                class="px-10 text-body-1"
+                type="submit"
+                color="accent"
+                flat
+                height="55"
+                text="회원가입"
+                @click="signUp()"
             />
           </v-col>
         </v-row>

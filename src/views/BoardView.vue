@@ -57,7 +57,8 @@ onMounted(() => {
 });
 
 function initialize() {
-  boardList.value = bstore.getBoardsCopy();
+  bstore.getBoardsCopy();
+  boardList.value = bstore.boards;
 }
 
 function boardWrite() {
@@ -67,7 +68,6 @@ function boardWrite() {
 async function boardDetail(article_no) {
   console.log(article_no);
   await bstore.getBoard(article_no);
-  // await cstore.getComments(article_no);
   router.push("/board/boardDetail");
 }
 
@@ -105,7 +105,7 @@ function closeDelete() {
     <v-data-table
         v-model:page="page"
         :headers="headers"
-        :items="bstore.boards"
+        :items="boardList"
         :items-per-page="itemsPerPage"
         item-value="article_no"
     >
@@ -129,9 +129,7 @@ function closeDelete() {
           </td>
           <td>{{ item.hit }}</td>
           <td>{{ item.date }}</td>
-          <div v-if="store.userInfo.id === item.userId">
-            <v-icon size="small" @click="deleteItem(item.articleNo)"> mdi-delete</v-icon>
-          </div>
+          <v-icon size="small" @click="deleteItem(item.articleNo)"> mdi-delete</v-icon>
         </tr>
       </template>
       <template v-slot:bottom>

@@ -33,7 +33,6 @@ export const boardStore = defineStore("boardPiniaStore", {
     },
     actions: {
         async getBoardsCopy() {
-
             await getBoardListCopy(
                 ({data}) => {
                     console.log("log test")
@@ -150,7 +149,8 @@ export const boardStore = defineStore("boardPiniaStore", {
                     }
                 },
                 async (error) => {
-                    console.log(error);
+                    console.log(error)
+                    console.log(error.response.data.message);
                     console.log(
                         "delete Board() error code [] ::: "
                         // error.response.status

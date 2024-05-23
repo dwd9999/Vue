@@ -34,7 +34,8 @@ async function modifyBoard(board, success, fail) {
 }
 
 async function deleteBoard(articleNo, success, fail) {
-    await api.delete(`/board`, articleNo).then(success).catch(fail);
+    console.log(articleNo)
+    await api.delete(`/board`,  articleNo).then(success).catch(fail);
 }
 
 async function recommendBoard({param}, success, fail) {
