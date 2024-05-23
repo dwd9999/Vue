@@ -22,6 +22,7 @@ const confirm = reactive({
 //사용자
 const user = reactive({
   id: "",
+  email: "",
 });
 const success = reactive({
   password: "",
@@ -81,10 +82,9 @@ function updateData(key) {
 // }
 //비밀번호 변경
 async function findPassword() {
-  http.get(`/user/find/password/${user.id}`).then(({ data }) => {
-    // 비밀번호 변경
-    // console.log(" -> " + data);
-    router.push("/pages/landing-pages/basic"); // 로그인 페이지로 돌아가기
+  http.post(`/lost`, user).then(({ data }) => {
+    if(data == 1) router.push("/signin"); // 로그인 페이지로 돌아가기
+    else alert("회원 정보가 존재하지 않습니다.");
   });
 }
 </script>
@@ -115,6 +115,13 @@ async function findPassword() {
           type="text"
           v-model="user.id"
           @keyup="updateData('id')"
+        />
+        <v-text-field
+            class="mx-auto"
+            width="300"
+            label="이메일"
+            type="text"
+            v-model="user.email"
         />
         <v-btn
           block

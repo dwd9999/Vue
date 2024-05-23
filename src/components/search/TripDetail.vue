@@ -28,9 +28,12 @@ function loadScript(){
 }
 
 function loadMap(){
+  console.log("parseFloat", trip.value.longitude);
+
   const container = document.getElementById("map");
   const options = {
-    center: new window.kakao.maps.LatLng(trip.latitude, trip.longtitude),
+    // center: new window.kakao.maps.LatLng(trip.value.longtitude, trip.value.latitude),
+    center: new window.kakao.maps.LatLng(trip.value.latitude, trip.value.longitude),
     level: 3
   };
   map.value = new window.kakao.maps.Map(container, options);
@@ -39,8 +42,8 @@ function loadMap(){
 
 function loadMaker(){
   const markerPosition = new window.kakao.maps.LatLng(
-      trip.latitude,
-      trip.longtitude
+      trip.value.latitude,
+      trip.value.longitude
   );
   const marker = new window.kakao.maps.Marker({
     position: markerPosition,
@@ -61,28 +64,27 @@ function loadMaker(){
   >
     <v-container>
       <v-row id="row1" align="center">
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="6" class="d-flex flex-column align-items-center">
           <div class="text-h4 font-weight-medium">
             {{ trip.title }}
           </div>
 
           <div class="text-body-1 text-medium-emphasis mt-5">
-            {{ trip.desc }}
+            {{ trip.overview }}
           </div>
         </v-col>
-          <div>
-            <h5>위치</h5>
-            <div id="map"></div>
-          </div>
         <v-col cols="12" md="6">
-          <v-img :src="trip.first_image2" />
+          <v-img :src="trip.firstImage2" />
         </v-col>
       </v-row>
       <v-row id="row2" align="center">
-        <v-col cols="12" md="5">
-          <KakaoMap />
+        <v-col cols="12" md="6">
+          <div class="d-flex flex-column align-items-center">
+            <h5>위치</h5>
+            <div id="map"></div>
+          </div>
         </v-col>
-        <v-col cols="12" md="7">
+        <v-col cols="12" md="6">
           <v-list
               base-color="transparent"
               bg-color="transparent"
@@ -111,6 +113,7 @@ function loadMaker(){
               </template>
             </v-list-item>
             <v-list-item
+                v-if="trip.tel!=''"
                 class="ga-5"
             >
               <template #prepend>

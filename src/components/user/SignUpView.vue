@@ -144,13 +144,15 @@ function idCheck() {
     alert("아이디를 입력하세요.");
     return;
   }
-  http.get(`/user/check/${user.id}`).then(({ data }) => {
+  http.get(`/checkId/${user.id}`).then(({ data }) => {
     console.log("아이디 중복 체크 -> " + data);
     if (data == 0) {
       success.id = "success";
+      // alert("사용 가능한 아이디 입니다.");
     }
     if (data == 1) {
       success.id = "failed";
+      // alert("이미 존재하는 아이디 입니다.");
     }
   });
 }
@@ -161,13 +163,16 @@ function signUp() {
   if (success.id != "success") {
     return;
   }
-  http.post(`/user/`, user).then(({ data }) => {
+  http.post(`/register`, user).then(({ data }) => {
     // 회원 가입 성공 -> 로그인으로 넘어가기?
-    console.log("회원가입 -> " + data);
-    toast.success("회원가입 완료", {
-      autoClose: 3000,
-    });
-    router.push(`/signin`);
+    if(data == 1) {
+      console.log("회원가입 -> " + data);
+      toast.success("회원가입 완료", {
+        autoClose: 3000,
+      });
+      router.push(`/signin`);
+    }
+    else alert("회원가입 실패. 양식에 맞춰 다시 입력해주세요.");
   });
 }
 </script>
@@ -200,7 +205,7 @@ function signUp() {
               id="floatingInput"
               v-model="user.id"
             />
-            <!-- <label for="floatingInput">ID</label> -->
+             <label for="floatingInput">ID</label>
             <span v-if="success.id == 'success'" class="success-message">
               사용 가능한 아이디입니다.
             </span>
@@ -252,7 +257,7 @@ function signUp() {
               bg-color="transparent"
               flat
               hide-details
-              label="이름"
+              label="이메일"
               single-line
               variant="outlined"
               type="email"

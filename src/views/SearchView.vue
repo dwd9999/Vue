@@ -1,8 +1,8 @@
 <script setup>
-import {ref, onMounted, reactive, watch} from "vue";
-import {gugunStore} from "@/stores/gugunPiniaStore";
-import {tripStore} from "@/stores/tripPiniaStore";
-import {useRouter} from "vue-router";
+import { ref, onMounted, reactive, watch } from "vue";
+import { gugunStore } from "@/stores/gugunPiniaStore";
+import { tripStore } from "@/stores/tripPiniaStore";
+import { useRouter } from "vue-router";
 
 const gstore = gugunStore();
 const tstore = tripStore();
@@ -10,74 +10,72 @@ const router = useRouter();
 const sidolist = ref([]);
 const gugunlist = ref([]); //
 const selected = reactive({
-  sido_code: "",
-  gugun_code: "",
-  content_type_id: "",
+  sidoCode: "",
+  gugunCode: "",
+  contentTypeId: "",
 });
 const typelist = [
-  {code: "12", name: "관광지"},
-  {code: "14", name: "문화시설"},
-  {code: "15", name: "축제공연행사"},
-  {code: "25", name: "여행코스"},
-  {code: "28", name: "레포츠"},
-  {code: "32", name: "숙박"},
-  {code: "38", name: "쇼핑"},
-  {code: "39", name: "음식점"},
+  { code: "12", name: "관광지" },
+  { code: "14", name: "문화시설" },
+  { code: "15", name: "축제공연행사" },
+  { code: "25", name: "여행코스" },
+  { code: "28", name: "레포츠" },
+  { code: "32", name: "숙박" },
+  { code: "38", name: "쇼핑" },
+  { code: "39", name: "음식점" },
 ];
 
 onMounted(() => {
   initialize();
-  selected.sido_code = 1;
+  selected.sidoCode = 1;
 });
 
 function initialize() {
   sidolist.value = [
-    {sido_code: 1, sido_name: "서울"},
-    {sido_code: 2, sido_name: "인천"},
-    {sido_code: 3, sido_name: "대전"},
-    {sido_code: 4, sido_name: "대구"},
-    {sido_code: 5, sido_name: "광주"},
-    {sido_code: 6, sido_name: "부산"},
-    {sido_code: 7, sido_name: "울산"},
-    {sido_code: 8, sido_name: "세종특별자치시"},
-    {sido_code: 31, sido_name: "경기도"},
-    {sido_code: 32, sido_name: "강원도"},
-    {sido_code: 33, sido_name: "충청북도"},
-    {sido_code: 34, sido_name: "충청남도"},
-    {sido_code: 35, sido_name: "경상북도"},
-    {sido_code: 36, sido_name: "경상남도"},
-    {sido_code: 37, sido_name: "전라북도"},
-    {sido_code: 38, sido_name: "전라남도"},
-    {sido_code: 39, sido_name: "제주도"},
+    { sidoCode: 1, sidoName: "서울" },
+    { sidoCode: 2, sidoName: "인천" },
+    { sidoCode: 3, sidoName: "대전" },
+    { sidoCode: 4, sidoName: "대구" },
+    { sidoCode: 5, sidoName: "광주" },
+    { sidoCode: 6, sidoName: "부산" },
+    { sidoCode: 7, sidoName: "울산" },
+    { sidoCode: 8, sidoName: "세종특별자치시" },
+    { sidoCode: 31, sidoName: "경기도" },
+    { sidoCode: 32, sidoName: "강원도" },
+    { sidoCode: 33, sidoName: "충청북도" },
+    { sidoCode: 34, sidoName: "충청남도" },
+    { sidoCode: 35, sidoName: "경상북도" },
+    { sidoCode: 36, sidoName: "경상남도" },
+    { sidoCode: 37, sidoName: "전라북도" },
+    { sidoCode: 38, sidoName: "전라남도" },
+    { sidoCode: 39, sidoName: "제주도" },
   ];
 }
 
 //구군리스트 가져오기
 async function updateSido() {
-  // alert(selected.sido_code);
-  console.log("Selected sido_code : ", selected.sido_code);
-  await gstore.getGuguns(selected.sido_code);
+  // alert(selected.sidoCode);
+  console.log("Selected sidoCode : ", selected.sidoCode);
+  await gstore.getGuguns(selected.sidoCode);
   gugunlist.value = gstore.checkGuguns;
   console.log("gugunlist: ", gugunlist);
 }
-
 async function updateGugun() {
-  console.log("Selected gugun_code : ", selected.gugun_code);
+  console.log("Selected gugunCode : ", selected.gugunCode);
 }
 
 async function updateType() {
-  console.log("Selected content_type_id : ", selected.content_type_id);
+  console.log("Selected contentTypeId : ", selected.contentTypeId);
 }
-
 async function selectButton() {
-  console.log("sido_code:", selected.sido_code);
-  console.log("gugun_code:", selected.gugun_code);
-  console.log("content_type_id:", selected.content_type_id);
+  console.log("sidoCode:", selected.sidoCode);
+  console.log("gugunCode:", selected.gugunCode);
+  console.log("contentTypeId:", selected.contentTypeId);
   await tstore.getTrips({selected});
   router.push("/search/tripList");
 }
 
-// watch(selected.sido_code, (newValue) =>
+// watch(selected.sidoCode, (newValue) =>
 //   console.log("new lang----------------------------", newValue)
 // );
 </script>
@@ -85,10 +83,10 @@ async function selectButton() {
 <template>
   <v-app>
     <v-sheet
-        id="search"
-        class="d-flex justify-center align-center text-center flex-column"
-        color="primary"
-        min-height="600"
+      id="search"
+      class="d-flex justify-center align-center text-center flex-column"
+      color="primary"
+      min-height="600"
     >
       <div class="text-h3 font-weight-medium mb-5">지역별 관광정보</div>
 
@@ -101,49 +99,49 @@ async function selectButton() {
           <v-col class="d-flex flex-column align-center" cols="12" md="4">
             <div class="text-h6 mt-1">시/도</div>
             <v-select
-                v-model="selected.sido_code"
-                label="시/도"
-                style="width: 100%"
-                :items="sidolist"
-                item-title="sido_name"
-                item-value="sido_code"
-                @update:modelValue="updateSido"
+              v-model="selected.sidoCode"
+              label="시/도"
+              style="width: 100%"
+              :items="sidolist"
+              item-title="sidoName"
+              item-value="sidoCode"
+              @update:modelValue="updateSido"
             ></v-select>
           </v-col>
           <v-col class="d-flex flex-column align-center" cols="12" md="4">
             <div class="text-h6 mt-1">구/군</div>
             <v-select
-                v-model="selected.gugun_code"
-                label="구/군"
-                style="width: 100%"
-                :items="gugunlist"
-                item-title="gugunName"
-                item-value="gugunCode"
-                @update:modelValue="updateGugun"
+              v-model="selected.gugunCode"
+              label="구/군"
+              style="width: 100%"
+              :items="gugunlist"
+              item-title="gugunName"
+              item-value="gugunCode"
+              @update:modelValue="updateGugun"
             ></v-select>
           </v-col>
           <v-col class="d-flex flex-column align-center" cols="12" md="4">
             <div class="text-h6 mt-1">관광지 유형</div>
             <v-select
-                v-model="selected.content_type_id"
-                label="유형"
-                style="width: 100%"
-                :items="typelist"
-                item-title="name"
-                item-value="code"
-                @update:modelValue="updateType"
+              v-model="selected.contentTypeId"
+              label="유형"
+              style="width: 100%"
+              :items="typelist"
+              item-title="name"
+              item-value="code"
+              @update:modelValue="updateType"
             ></v-select>
           </v-col>
         </v-row>
         <div class="d-flex ga-12 justify-center mt-15">
           <v-btn
-              class="text-primary text-body-2"
-              flat
-              height="55"
-              rounded
-              text="Discover Mode"
-              @click="selectButton"
-              width="128"
+            class="text-primary text-body-2"
+            flat
+            height="55"
+            rounded
+            text="Discover Mode"
+            @click="selectButton"
+            width="128"
           />
         </div>
       </v-container>

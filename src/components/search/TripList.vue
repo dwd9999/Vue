@@ -27,9 +27,9 @@ function initialize() {
   tripList.value = tstore.checkTrips;
 }
 
-async function GoToTripDetail(content_id) {
-  console.log(content_id);
-  await tstore.getTripDetail(content_id);
+async function GoToTripDetail(contentId) {
+  console.log(contentId);
+  await tstore.getTripDetail(contentId);
   router.push("/search/tripDetail");
 }
 </script>
@@ -38,9 +38,10 @@ async function GoToTripDetail(content_id) {
   <div class = "container">
     <v-card
         v-for="info in tripList"
-        :key="info.content_type_id"
-        class="mx-auto"
+        :key="info.contentTypeId"
+        class="mx-auto my-2"
         max-width="400"
+        style="height: 500px; overflow: hidden;"
         @click="GoToTripDetail(info.contentId)"
     >
       <v-img
@@ -48,24 +49,17 @@ async function GoToTripDetail(content_id) {
           height="200"
           :src="info.firstImage || kakaoInfowindow"
           cover
-      >
-      </v-img>
+      ></v-img>
       <v-card-title>{{ info.title }}</v-card-title>
-      <v-card-subtitle>
+<!--      <v-card-subtitle>-->
 <!--        {{-->
-<!--          typelist.filter((el) => el.code === info.contentTypeId)[0].name || " 여행지 "-->
+<!--          typelist.filter((el) => el.code == info.contentTypeId)[0].name || " 여행지 "-->
 <!--        }}-->
-      </v-card-subtitle>
-
-      <v-card-text>
+<!--      </v-card-subtitle>-->
+      <v-card-text class="overflow-hidden" style="max-height: 100px;">
         <div>{{ info.addr1 }}</div>
-
         <div>{{ info.addr2 }}</div>
       </v-card-text>
-
-<!--      <v-card-actions>-->
-<!--        <v-btn color="orange" @click="handleClick"> 여행게획 추가 </v-btn>-->
-<!--      </v-card-actions>-->
     </v-card>
   </div>
 </template>

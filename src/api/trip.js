@@ -6,17 +6,17 @@ async function getTripList({selected}, success, fail) {
     await api
         .get(`/trip`, {
             params: {
-                sidoCode: selected.sido_code,
-                gugunCode: selected.gugun_code,
-                contentTypeId: selected.content_type_id,
+                sidoCode: selected.sidoCode,
+                gugunCode: selected.gugunCode,
+                contentTypeId: selected.contentTypeId,
             },
         })
         .then(success)
         .catch(fail);
 }
 
-async function showTripDetail(content_id, success, fail) {
-    await api.get(`/trip/${content_id}`).then(success).catch(fail);
+async function showTripDetail(contentId, success, fail) {
+    await api.get(`/trip/${contentId}`).then(success).catch(fail);
 }
 
 export {
