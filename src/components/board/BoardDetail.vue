@@ -1,9 +1,9 @@
 <script setup>
-import { reactive } from "vue";
-import { useRouter } from "vue-router";
-import { computed } from "vue";
-import { userStore } from "@/stores/userPiniaStore";
-import { boardStore } from "@/stores/boardPiniaStore";
+import {reactive} from "vue";
+import {useRouter} from "vue-router";
+import {computed} from "vue";
+import {userStore} from "@/stores/userPiniaStore";
+import {boardStore} from "@/stores/boardPiniaStore";
 
 const router = useRouter();
 const store = userStore();
@@ -40,11 +40,15 @@ async function deleteB() {
 
 <template>
   <v-sheet class="text-center py-16" color="white">
-    <template v-slot:top>
-      <v-toolbar flat>
+    <div id="title" class="text-black text-h4 font-weight-medium">
+      <h3 class="d-inline" v-text="board.subject"></h3>
+    </div>
+    <v-container>
+      <!--    <template v-slot:top>-->
+      <v-toolbar flat color="white" v-if="store.id === board.userId">
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
-        <div class="col-lg-2 offset-lg-1" v-if="store.userInfo.id === board.userId">
+        <div class="col-lg-2 offset-lg-1">
           <button id="btn-write" class="btn btn-success" type="button" v-on:click="modify">
             수정
           </button>
@@ -53,14 +57,11 @@ async function deleteB() {
           </button>
         </div>
       </v-toolbar>
-    </template>
-    <div id="title" class="text-black text-h4 font-weight-medium">
-      <h3 class="d-inline" v-text="board.subject"></h3>
-    </div>
-    <v-container>
+      <!--    </template>-->
+
       <v-row>
         <v-col cols="6">
-          <h7 bg-color="transparent" flat single-line> 작성자 </h7>
+          <h7 bg-color="transparent" flat single-line> 작성자</h7>
           <v-textarea
               bg-color="transparent"
               :model-value="board.userId"
@@ -72,7 +73,7 @@ async function deleteB() {
           />
         </v-col>
         <v-col cols="6">
-          <h7 bg-color="transparent" flat single-line> 조회수 </h7>
+          <h7 bg-color="transparent" flat single-line> 조회수</h7>
           <v-textarea
               bg-color="transparent"
               :model-value="board.hit"
@@ -84,7 +85,7 @@ async function deleteB() {
           />
         </v-col>
         <v-col cols="6">
-          <h7 bg-color="transparent" flat single-line> 추천수 </h7>
+          <h7 bg-color="transparent" flat single-line> 추천수</h7>
           <v-textarea
               bg-color="transparent"
               :model-value="board.recommendation"
@@ -96,7 +97,7 @@ async function deleteB() {
           />
         </v-col>
         <v-col cols="6">
-          <h7 bg-color="transparent" flat single-line> 작성일 </h7>
+          <h7 bg-color="transparent" flat single-line> 작성일</h7>
           <v-textarea
               bg-color="transparent"
               :model-value="board.date"

@@ -28,6 +28,7 @@ function updateContent(e) {
 async function modify() {
   console.log(article);
   await bstore.modify(article);
+  console.log("최종 로그: ", bstore.board);
   router.push("/board/boardDetail");
 }
 //글수정 취소
@@ -43,6 +44,7 @@ function cancel() {
       <v-container>
         <v-row>
           <v-col cols="6">
+            <h7 bg-color="transparent" flat single-line> 글 제목 </h7>
             <v-text-field
               v-model="article.subject"
               type="text"
@@ -61,7 +63,7 @@ function cancel() {
           <v-col cols="6">
             <h7 bg-color="transparent" flat single-line> 작성자 </h7>
             <v-text-field
-              v-model="article.userId"
+              v-model="store.id"
               type="text"
               class="form-control"
               id="id"
@@ -71,7 +73,7 @@ function cancel() {
               label="작성자"
               single-line
               variant="outlined"
-              :value="article.userId"
+              :value="store.id"
               name="userId"
               readonly="readonly"
             />

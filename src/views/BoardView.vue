@@ -107,7 +107,7 @@ function closeDelete() {
         class="text-center"
         v-model:page="page"
         :headers="headers"
-        :items="boardList"
+        :items="bstore.boards"
         :items-per-page="itemsPerPage"
         item-value="article_no"
     >

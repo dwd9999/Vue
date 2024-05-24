@@ -35,9 +35,7 @@ export const boardStore = defineStore("boardPiniaStore", {
         async getBoardsCopy() {
             await getBoardListCopy(
                 ({data}) => {
-                    console.log("log test")
                     this.boards = data.list;
-                    console.log("3. getBoardsCopy data >> ", data);
                 },
                 async (error) => {
                     console.log("getboardsCopy() error code [] ::: ", error.response.status);
@@ -83,78 +81,51 @@ export const boardStore = defineStore("boardPiniaStore", {
             await writeBoard(
                 board,
                 async ({data}) => {
-                    if (data.message === "success") {
-
-                        this.getBoardsCopy();
-                        // commit("SET_USER_INFO", data.userInfo);
-                        // console.log("3. getUserInfo data >> ", data);
-                    } else {
-                        console.log("게시판 글쓰기 불가능!!!!");
-                    }
+                    await this.getBoardsCopy();
                 },
                 async (error) => {
                     console.log(
                         "writeBoard() error code [토큰 만료되어 사용 불가능.] ::: ",
                         error.response.status
                     );
-                    //   commit("SET_IS_VALID_TOKEN", false);
-                    //   await dispatch("tokenRegeneration");
                 }
             );
         },
         async modify(board) {
-            // let decodeToken = jwtDecode(token);
-            // console.log("회원정보수정중2");
-            // console.log("5. modifyUserInfo() decodeToken :: ", decodeToken);
-            console.log(board);
             await modifyBoard(
                 board,
                 ({data}) => {
-                    if (data.message === "success") {
-                        this.board = data.board;
-                        // console.log("3. getUserInfo data >> ", data);
-                    } else {
-                        console.log("유저 정보 없음!!!!");
-                    }
+                    console.log("board: ", board)
+                    this.board = data.board;
+                    this.getBoard(board.articleNo);
                 },
                 async (error) => {
                     console.log(
-                        "modifyBoard() error code [토큰 만료되어 사용 불가능.] ::: ",
-                        error.response.status
+                        error.response.data.message
                     );
-                    //   commit("SET_IS_VALID_TOKEN", false);
-                    //   await dispatch("tokenRegeneration");
                 }
             );
         },
         async deleteB(articleNo) {
-            // let decodeToken = jwtDecode(token);
-            // console.log("회원정보수정중2");
-            // console.log("5. modifyUserInfo() decodeToken :: ", decodeToken);
             console.log(articleNo);
             await deleteBoard(
                 articleNo,
                 async ({data}) => {
                     console.log(data);
-                    if (data.message === "success") {
-                        this.board = null;
-                        const search = {
-                            type: this.type,
-                            pgno: this.pgno,
-                            key: this.key,
-                            word: this.word,
-                        };
-                        this.getBoardsCopy({search}); // 삭제 후 게시글 목록으로 이동
-                    } else {
-                        console.log("유저 정보 없음!!!!");
-                    }
+                    this.board = null;
+                    const search = {
+                        type: this.type,
+                        pgno: this.pgno,
+                        key: this.key,
+                        word: this.word,
+                    };
+                    await this.getBoardsCopy({search});
                 },
                 async (error) => {
                     console.log(error)
                     console.log(error.response.data.message);
                     console.log(
                         "delete Board() error code [] ::: "
-                        // error.response.status
                     );
                 }
             );
